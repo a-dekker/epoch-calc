@@ -103,15 +103,12 @@ Page {
             PageHeader {
                 title: qsTr("epoch-calc")
             }
-            Rectangle {
-                id: splitter
-                color: "#999999"
-                x: 20
-                width: parent.width - 40
-                height: 2
-                anchors.leftMargin: 20
-                anchors.topMargin: 30
-            }
+        Separator {
+            color: Theme.primaryColor
+            width: parent.width
+            anchors.horizontalCenter: parent.horizontalCenter
+            horizontalAlignment: Qt.AlignHCenter
+        }
             Label {
                 x: Theme.paddingLarge
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -204,7 +201,7 @@ Page {
                         regExp: /^[0-9]{1,10}$/
                     }
                     color: errorHighlight ? "red" : Theme.highlightColor
-                    inputMethodHints: Qt.ImhFormattedNumbersOnly | Qt.ImhNoPredictiveText
+                    inputMethodHints: Qt.ImhDigitsOnly
                     horizontalAlignment: Text.AlignRight
                     text: Math.round(new Date().getTime() / 1000.0)
                     EnterKey.enabled: text.trim().length > 0
@@ -220,15 +217,12 @@ Page {
                 }
             }
 
-            Rectangle {
-                id: splitter2
-                color: "#999999"
-                x: 20
-                width: parent.width - 40
-                height: 2
-                anchors.leftMargin: 20
-                anchors.topMargin: 30
-            }
+        Separator {
+            color: Theme.primaryColor
+            width: parent.width
+            anchors.horizontalCenter: parent.horizontalCenter
+            horizontalAlignment: Qt.AlignHCenter
+        }
             Label {
                 x: Theme.paddingLarge
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -313,15 +307,12 @@ Page {
                     color: Theme.secondaryColor
                 }
             }
-            Rectangle {
-                id: splitter3
-                color: "#999999"
-                x: 20
-                width: parent.width - 40
-                height: 2
-                anchors.leftMargin: 20
-                anchors.topMargin: 30
-            }
+        Separator {
+            color: Theme.primaryColor
+            width: parent.width
+            anchors.horizontalCenter: parent.horizontalCenter
+            horizontalAlignment: Qt.AlignHCenter
+        }
         }
     }
 }

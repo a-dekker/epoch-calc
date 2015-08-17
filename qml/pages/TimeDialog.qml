@@ -37,11 +37,9 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-
-
     Dialog {
         id: diaTime
-        anchors.fill: parent
+        // anchors.fill: parent
         canAccept: true
         property string infotext: ""
         property int hour: 0
@@ -49,21 +47,26 @@ import Sailfish.Silica 1.0
         property int second: 0
 
         DialogHeader {
-            //acceptText: "Set as Default"
+            acceptText: qsTr("Save")
+            cancelText: qsTr("Cancel")
         }
 
         onAccepted: {
-            //
             hour=pickTime.hour
             second=pickTime.second
             minute=pickTime.minute
+            if (nameOfDish.text.trim() === "" ) {
+               infotext=diaTime.infotext
+            } else {
+                infotext=nameOfDish.text.substring(0, 16).trim()
+            }
         }
 
         onRejected: {
-            //reject
+            // just reject
         }
 
-        Column{
+        Column {
             id: colSettings
             width: parent.width
             height: parent.height
@@ -71,23 +74,20 @@ import Sailfish.Silica 1.0
             PageHeader {
                 title: " "
             }
-
-            TimePickerSeconds{
+            Label {
+                text: ('0' + pickTime.hour).slice(-2) + ":" + ('0' + pickTime.minute).slice(-2) + ":" + ('0' + pickTime.second).slice(-2)
+                color: Theme.secondaryColor
+                anchors.horizontalCenter: parent.horizontalCenter
+                font.pixelSize: Theme.fontSizeLarge
+                font.family: Theme.fontSizeSmall
+            }
+            TimePickerSeconds {
                 id: pickTime
                 hour: diaTime.hour
                 minute: diaTime.minute
                 second: diaTime.second
                 anchors.horizontalCenter: parent.horizontalCenter
             }
-            Label{
-                text: diaTime.infotext + ": " + pickTime.hour + " h " + pickTime.minute + " min " + pickTime.second +" sec "
-                color: Theme.secondaryColor
-                anchors.horizontalCenter: parent.horizontalCenter
-                font.pixelSize: Theme.fontSizeSmall
-                font.family: Theme.fontSizeSmall
-            }
         }
 
-
     }
-

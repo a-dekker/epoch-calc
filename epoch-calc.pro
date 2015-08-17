@@ -10,7 +10,7 @@
 #   - translation filenames have to be changed
 
 # The name of your application
-TARGET = epoch-calc
+TARGET = harbour-epoch-calc
 
 CONFIG += sailfishapp
 
@@ -21,8 +21,8 @@ OTHER_FILES += qml/epoch-calc.qml \
     rpm/epoch-calc.changes.in \
     rpm/epoch-calc.spec \
     rpm/epoch-calc.yaml \
-    translations/*.ts \
-    epoch-calc.desktop \
+    harbour-epoch-calc.desktop \
+    harbour-epoch-calc.png \
     qml/pages/About.qml \
     qml/pages/MainPage.qml \
     qml/pages/Help.qml \

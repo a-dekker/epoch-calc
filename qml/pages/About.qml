@@ -8,60 +8,65 @@ Page {
         contentWidth: parent.width
         contentHeight: col.height
 
-        VerticalScrollDecorator {}
+        VerticalScrollDecorator {
+        }
 
         Column {
             id: col
             spacing: Theme.paddingLarge
             width: parent.width
             PageHeader {
-                title: "About"
+                title: qsTr("About")
             }
             SectionHeader {
-                text: "Info"
+                text: qsTr("Info")
             }
-            Rectangle {
-                color: "#999999"
-                x: Theme.paddingLarge * 3
-                width: parent.width - Theme.paddingLarge * 3 * 2
-                height: 2
-                anchors.leftMargin: 20
-                anchors.topMargin: 30
+            Separator {
+                color: Theme.primaryColor
+                width: parent.width
+                anchors.horizontalCenter: parent.horizontalCenter
+                horizontalAlignment: Qt.AlignHCenter
             }
             Label {
                 text: "epoch-calc"
                 font.pixelSize: Theme.fontSizeExtraLarge
                 anchors.horizontalCenter: parent.horizontalCenter
             }
-            Image {
-               anchors.horizontalCenter: parent.horizontalCenter
-               source: "/usr/share/icons/hicolor/86x86/apps/epoch-calc.png"
+            Rectangle {
+                width: 80
+                height: width
+                radius: 100
+                anchors.horizontalCenter: parent.horizontalCenter
+                NumberAnimation on rotation {
+                    from: 0
+                    to: 360
+                    duration: 5000
+                    loops: 1
+                }
+                Image {
+                   source: "/usr/share/icons/hicolor/86x86/apps/harbour-epoch-calc.png"
+                }
             }
             Label {
-                text: "Version " + version
+                text: qsTr("Version") + " " + version
                 anchors.horizontalCenter: parent.horizontalCenter
                 color: Theme.secondaryHighlightColor
             }
             Label {
                 text: "Assistant for calculating Unix time"
                 font.pixelSize: Theme.fontSizeSmall
-                width: parent.width
-                horizontalAlignment: Text.Center
-                textFormat: Text.RichText
-                wrapMode: Text.Wrap
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: Theme.secondaryColor
             }
             SectionHeader {
-                text: "Author"
+                text: qsTr("Author")
             }
-            Rectangle {
-                color: "#999999"
-                x: Theme.paddingLarge * 3
-                width: parent.width - Theme.paddingLarge * 3 * 2
-                height: 2
-                anchors.leftMargin: 20
-                anchors.topMargin: 30
+            Separator {
+                color: Theme.primaryColor
+                width: parent.width
+                anchors.horizontalCenter: parent.horizontalCenter
+                horizontalAlignment: Qt.AlignHCenter
             }
-
             Label {
                 text: "© Arno Dekker 2014-2015"
                 anchors.horizontalCenter: parent.horizontalCenter
