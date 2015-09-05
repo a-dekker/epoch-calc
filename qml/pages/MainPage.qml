@@ -189,14 +189,15 @@ Page {
                 x: Theme.paddingLarge
                 y: Theme.paddingLarge
                 Label {
-                    text: "Unix time in seconds"
-                    width: (column.width - (Theme.paddingLarge * 2)) / 2
+                    height: Theme.paddingLarge * 2
+                    verticalAlignment: Text.AlignBottom
+                    text: "Unix time in secs"
+                    width: (column.width  / 3)
                 }
                 TextField {
                     id: ux_time_textfield
-
-                    placeholderText: "Unix seconds"
-                    width: (column.width - (Theme.paddingLarge * 2)) / 2
+                    placeholderText: "Unix secs."
+                    width: (column.width - (Theme.paddingLarge * 3)) / 2
                     validator: RegExpValidator {
                         regExp: /^[0-9]{1,10}$/
                     }
@@ -215,6 +216,14 @@ Page {
                         on_update_ux_secs()
                     }
                 }
+                IconButton {
+                    icon.source: "image://theme/icon-l-cancel"
+                    visible: ux_time_textfield.text
+                    onClicked: {
+                        ux_time_textfield.text = ""
+                        ux_time_textfield.focus = true
+                    }
+                }
             }
 
         Separator {
@@ -227,7 +236,6 @@ Page {
                 x: Theme.paddingLarge
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: qsTr("Current time info")
-                //    color: Theme.secondaryColor
             }
             Row {
                 x: Theme.paddingLarge

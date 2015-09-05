@@ -55,11 +55,6 @@ import Sailfish.Silica 1.0
             hour=pickTime.hour
             second=pickTime.second
             minute=pickTime.minute
-            if (nameOfDish.text.trim() === "" ) {
-               infotext=diaTime.infotext
-            } else {
-                infotext=nameOfDish.text.substring(0, 16).trim()
-            }
         }
 
         onRejected: {
