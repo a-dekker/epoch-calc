@@ -2,7 +2,8 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 Page {
-    id: page
+    id: helpPage
+    allowedOrientations: Orientation.Portrait | Orientation.Landscape | Orientation.LandscapeInverted
     SilicaFlickable {
         anchors.fill: parent
         contentWidth: parent.width
@@ -19,7 +20,7 @@ Page {
                 title: "Info"
             }
             Label {
-                width: col.width - Theme.paddingLarge
+                width: col.width - Theme.paddingLarge * 2
                 x: Theme.paddingLarge
                 y: Theme.paddingLarge
                 text: "<html><h2>epoch-calc</h2> helps you to convert the Unix time to human readable format and vice versa.<br><br> \

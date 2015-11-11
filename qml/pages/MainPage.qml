@@ -4,6 +4,8 @@ import Sailfish.Silica 1.0
 Page {
     id: page
 
+    allowedOrientations: Orientation.Portrait | Orientation.Landscape
+                         | Orientation.LandscapeInverted
     onStatusChanged: {
         if (status === PageStatus.Inactive) {
             // stop timer when not on this Page
@@ -38,7 +40,8 @@ Page {
         mainapp.uxTime = ux_time_textfield.text
         mainapp.calc_date = dateField.text
         mainapp.calc_time = timeField.text
-        calculated_utc_time.text = utc_datetime_formatted
+        calculated_utc_time_portrait.text = utc_datetime_formatted
+        calculated_utc_time_landscape.text = utc_datetime_formatted
     }
 
     function on_update_ux_secs() {
@@ -58,7 +61,8 @@ Page {
                 + (seconds > 9 ? seconds : "0" + seconds)
         dateField.text = year + "-" + (month > 9 ? month : "0" + month) + "-"
                 + (day > 9 ? day : "0" + day)
-        calculated_utc_time.text = utc_datetime_formatted
+        calculated_utc_time_portrait.text = utc_datetime_formatted
+        calculated_utc_time_landscape.text = utc_datetime_formatted
         mainapp.uxTime = ux_time_textfield.text
         mainapp.calc_date = dateField.text
         mainapp.calc_time = timeField.text
@@ -70,7 +74,7 @@ Page {
         property date currentDateTime: new Date()
         property string timezone: currentDateTime.toLocaleString(locale, "t")
         property string local_date: currentDateTime.toLocaleString(locale,
-                                                                "yyyy-MM-dd")
+                                                                   "yyyy-MM-dd")
     }
 
     // To enable PullDownMenu, place our content in a SilicaFlickable
@@ -99,16 +103,17 @@ Page {
 
             width: page.width
             // set spacing considering the width/height ratio
-            spacing: page.height / page.width > 1.6 ? Theme.paddingMedium : Theme.paddingSmall
+            spacing: page.height / page.width > 1.6 ? Theme.paddingMedium : Theme.paddingSmall - 2
             PageHeader {
                 title: qsTr("epoch-calc")
             }
-        Separator {
-            color: Theme.primaryColor
-            width: parent.width
-            anchors.horizontalCenter: parent.horizontalCenter
-            horizontalAlignment: Qt.AlignHCenter
-        }
+            Separator {
+                color: Theme.primaryColor
+                width: parent.width
+                anchors.horizontalCenter: parent.horizontalCenter
+                horizontalAlignment: Qt.AlignHCenter
+                visible: isPortrait
+            }
             Label {
                 x: Theme.paddingLarge
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -139,9 +144,16 @@ Page {
                             on_update_ux_time()
                         })
                     }
-                    width: (column.width - Theme.paddingLarge) / 2
+                    width: isPortrait ? (column.width - Theme.paddingLarge)
+                                        / 2 : (column.width - Theme.paddingLarge) / 3.5
                     color: Theme.highlightColor
                     text: local_datetime.local_date
+                }
+                Label {
+                    id: calculated_utc_time_landscape
+                    text: get_utc_datetime() + " GMT"
+                    color: Theme.secondaryColor
+                    visible: isLandscape
                 }
                 TextField {
                     id: timeField
@@ -167,7 +179,8 @@ Page {
                         })
                     }
                     color: Theme.highlightColor
-                    width: (column.width - Theme.paddingLarge) / 2
+                    width: isPortrait ? (column.width - Theme.paddingLarge)
+                                        / 2 : (column.width - Theme.paddingLarge) / 3.5
                     horizontalAlignment: Text.AlignRight
                     text: get_local_time()
                 }
@@ -179,10 +192,11 @@ Page {
                 }
             }
             Label {
-                id: calculated_utc_time
+                id: calculated_utc_time_portrait
                 text: get_utc_datetime() + " GMT"
                 anchors.horizontalCenter: parent.horizontalCenter
                 color: Theme.secondaryColor
+                visible: isPortrait
             }
 
             Row {
@@ -192,7 +206,7 @@ Page {
                     height: Theme.paddingLarge * 2
                     verticalAlignment: Text.AlignBottom
                     text: "Unix time in secs"
-                    width: (column.width  / 3)
+                    width: (column.width / 3)
                 }
                 TextField {
                     id: ux_time_textfield
@@ -217,8 +231,10 @@ Page {
                     }
                 }
                 IconButton {
-                    icon.source: "image://theme/icon-l-cancel"
+                    id: iconButton
+                    icon.source: "image://theme/icon-m-clear"
                     visible: ux_time_textfield.text
+                    highlighted: pressed
                     onClicked: {
                         ux_time_textfield.text = ""
                         ux_time_textfield.focus = true
@@ -226,12 +242,12 @@ Page {
                 }
             }
 
-        Separator {
-            color: Theme.primaryColor
-            width: parent.width
-            anchors.horizontalCenter: parent.horizontalCenter
-            horizontalAlignment: Qt.AlignHCenter
-        }
+            Separator {
+                color: Theme.primaryColor
+                width: parent.width
+                anchors.horizontalCenter: parent.horizontalCenter
+                horizontalAlignment: Qt.AlignHCenter
+            }
             Label {
                 x: Theme.paddingLarge
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -241,32 +257,62 @@ Page {
                 x: Theme.paddingLarge
                 y: Theme.paddingLarge
                 width: parent.width
+                spacing: isLandscape ? Theme.paddingMedium : 0
                 Label {
                     text: "Unix time"
-                    width: (parent.width - (Theme.paddingLarge * 2)) / 2
+                    width: isPortrait ? (parent.width - (Theme.paddingLarge * 2))
+                                        / 2 : (parent.width - (Theme.paddingLarge * 2)) / 5.2
                 }
                 Label {
                     id: unix_secs
                     text: mainapp.uxTime_now
-                    width: (parent.width - (Theme.paddingLarge * 2)) / 2
+                    width: isPortrait ? (parent.width - (Theme.paddingLarge * 2))
+                                        / 2 : (parent.width - (Theme.paddingLarge * 2)) / 2.5
                     horizontalAlignment: Text.AlignRight
                     color: Theme.secondaryColor
+                }
+                Label {
+                    text: "Local TZ"
+                    width: (parent.width - (Theme.paddingLarge * 2)) / 5.5
+                    visible: isLandscape
+                }
+                Label {
+                    text: local_datetime.timezone
+                    width: (parent.width - (Theme.paddingLarge * 2)) / 5.2
+                    horizontalAlignment: Text.AlignRight
+                    color: Theme.secondaryColor
+                    visible: isLandscape
                 }
             }
             Row {
                 x: Theme.paddingLarge
                 y: Theme.paddingLarge
                 width: parent.width
+                spacing: isLandscape ? Theme.paddingMedium : 0
                 Label {
                     text: "Local time"
-                    width: (parent.width - (Theme.paddingLarge * 2)) / 2
+                    width: isPortrait ? (parent.width - (Theme.paddingLarge * 2))
+                                        / 2 : (parent.width - (Theme.paddingLarge * 2)) / 5.3
                 }
                 Label {
                     id: local_time
                     text: mainapp.localTime
-                    width: (parent.width - (Theme.paddingLarge * 2)) / 2
+                    width: isPortrait ? (parent.width - (Theme.paddingLarge * 2))
+                                        / 2 : (parent.width - (Theme.paddingLarge * 2)) / 2.5
                     horizontalAlignment: Text.AlignRight
                     color: Theme.secondaryColor
+                }
+                Label {
+                    text: "TZ offset"
+                    width: (parent.width - (Theme.paddingLarge * 2)) / 5.5
+                    visible: isLandscape
+                }
+                Label {
+                    text: new Date().toString().split(" ")[5]
+                    width: (parent.width - (Theme.paddingLarge * 2)) / 5.2
+                    horizontalAlignment: Text.AlignRight
+                    color: Theme.secondaryColor
+                    visible: isLandscape
                 }
             }
             Row {
@@ -276,26 +322,31 @@ Page {
                 Label {
                     text: "Local TZ"
                     width: (parent.width - (Theme.paddingLarge * 2)) / 2
+                    visible: isPortrait
                 }
                 Label {
                     text: local_datetime.timezone
                     width: (parent.width - (Theme.paddingLarge * 2)) / 2
                     horizontalAlignment: Text.AlignRight
                     color: Theme.secondaryColor
+                    visible: isPortrait
                 }
             }
             Row {
                 x: Theme.paddingLarge
                 y: Theme.paddingLarge
                 width: parent.width
+                spacing: isLandscape ? Theme.paddingMedium : 0
                 Label {
                     text: "GMT time"
-                    width: (parent.width - (Theme.paddingLarge * 2)) / 2
+                    width: isPortrait ? (parent.width - (Theme.paddingLarge * 2))
+                                        / 2 : (parent.width - (Theme.paddingLarge * 2)) / 5.3
                 }
                 Label {
                     id: utc_time
                     text: utcTime //.utc_datetime_formatted
-                    width: (parent.width - (Theme.paddingLarge * 2)) / 2
+                    width: isPortrait ? (parent.width - (Theme.paddingLarge * 2))
+                                        / 2 : (parent.width - (Theme.paddingLarge * 2)) / 2.5
                     horizontalAlignment: Text.AlignRight
                     color: Theme.secondaryColor
                 }
@@ -307,20 +358,23 @@ Page {
                 Label {
                     text: "TZ offset"
                     width: (parent.width - (Theme.paddingLarge * 2)) / 2
+                    visible: isPortrait
                 }
                 Label {
                     text: new Date().toString().split(" ")[5]
                     width: (parent.width - (Theme.paddingLarge * 2)) / 2
                     horizontalAlignment: Text.AlignRight
                     color: Theme.secondaryColor
+                    visible: isPortrait
                 }
             }
-        Separator {
-            color: Theme.primaryColor
-            width: parent.width
-            anchors.horizontalCenter: parent.horizontalCenter
-            horizontalAlignment: Qt.AlignHCenter
-        }
+            Separator {
+                color: Theme.primaryColor
+                width: parent.width
+                anchors.horizontalCenter: parent.horizontalCenter
+                horizontalAlignment: Qt.AlignHCenter
+                visible: isPortrait
+            }
         }
     }
 }

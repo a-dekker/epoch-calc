@@ -37,52 +37,80 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-    Dialog {
-        id: diaTime
-        // anchors.fill: parent
-        canAccept: true
-        property string infotext: ""
-        property int hour: 0
-        property int minute: 0
-        property int second: 0
+Dialog {
+    id: diaTime
+    allowedOrientations: Orientation.Portrait | Orientation.Landscape
+                         | Orientation.LandscapeInverted
+    canAccept: true
+    property string infotext: ""
+    property int hour: 0
+    property int minute: 0
+    property int second: 0
 
-        DialogHeader {
-            acceptText: qsTr("Save")
-            cancelText: qsTr("Cancel")
-        }
-
-        onAccepted: {
-            hour=pickTime.hour
-            second=pickTime.second
-            minute=pickTime.minute
-        }
-
-        onRejected: {
-            // just reject
-        }
-
-        Column {
-            id: colSettings
-            width: parent.width
-            height: parent.height
-            spacing: Theme.paddingLarge
-            PageHeader {
-                title: " "
-            }
-            Label {
-                text: ('0' + pickTime.hour).slice(-2) + ":" + ('0' + pickTime.minute).slice(-2) + ":" + ('0' + pickTime.second).slice(-2)
-                color: Theme.secondaryColor
-                anchors.horizontalCenter: parent.horizontalCenter
-                font.pixelSize: Theme.fontSizeLarge
-                font.family: Theme.fontSizeSmall
-            }
-            TimePickerSeconds {
-                id: pickTime
-                hour: diaTime.hour
-                minute: diaTime.minute
-                second: diaTime.second
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-        }
-
+    DialogHeader {
+        acceptText: qsTr("Save")
+        cancelText: qsTr("Cancel")
     }
+
+    onAccepted: {
+        hour = pickTime.hour
+        second = pickTime.second
+        minute = pickTime.minute
+    }
+
+    onRejected: {
+        // just reject
+    }
+
+    Item {
+        id: marginspace
+        width: parent.width
+        height: Theme.paddingLarge * 6
+    }
+    Label {
+        id: timeLabel
+        anchors.top: marginspace.bottom
+        visible: isPortrait
+        text: ('0' + pickTime.hour).slice(
+                  -2) + ":" + ('0' + pickTime.minute).slice(
+                  -2) + ":" + ('0' + pickTime.second).slice(-2)
+        color: Theme.secondaryColor
+        anchors.horizontalCenter: parent.horizontalCenter
+        font.pixelSize: Theme.fontSizeLarge
+        font.family: Theme.fontSizeSmall
+    }
+    Item {
+        anchors.top: timeLabel.bottom
+        id: marginspace2
+        width: parent.width
+        height: Theme.paddingMedium
+    }
+    TimePickerSeconds {
+        id: pickTime
+        y: isLandscape ? Theme.paddingLarge * 1.4 : diaTime.height / 3
+        hour: diaTime.hour
+        minute: diaTime.minute
+        second: diaTime.second
+        anchors.horizontalCenter: isPortrait ? parent.horizontalCenter : parent.horizontalDummy
+    }
+    Item {
+        id: time_landscape
+        anchors.left: pickTime.right
+        height: timeLabel.height - Theme.paddingLarge * 2
+        anchors.verticalCenter: parent.verticalCenter
+        width: timeLabel.width + Theme.paddingLarge * 2
+        visible: isLandscape
+        Label {
+            id: timeLabel_landscape
+            anchors.top: time_landscape.bottom
+            visible: isLandscape
+            text: ('0' + pickTime.hour).slice(
+                      -2) + ":" + ('0' + pickTime.minute).slice(
+                      -2) + ":" + ('0' + pickTime.second).slice(-2)
+            color: Theme.secondaryColor
+            anchors.horizontalCenter: parent.horizontalCenter
+            font.pixelSize: Theme.fontSizeLarge
+            font.family: Theme.fontSizeSmall
+        }
+    }
+}

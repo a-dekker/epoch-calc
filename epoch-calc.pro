@@ -20,9 +20,11 @@ OTHER_FILES += qml/epoch-calc.qml \
     qml/cover/CoverPage.qml \
     rpm/epoch-calc.changes.in \
     rpm/epoch-calc.spec \
-    rpm/epoch-calc.yaml \
     harbour-epoch-calc.desktop \
     harbour-epoch-calc.png \
+    qml/images/coverbg.png \
+    qml/images/timepicker.png \
+    qml/images/TimePickerSeconds.png \
     qml/pages/About.qml \
     qml/pages/MainPage.qml \
     qml/pages/Help.qml \

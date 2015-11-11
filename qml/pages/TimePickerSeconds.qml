@@ -144,8 +144,8 @@ Item {
     Image {
         id: minutesCircle
         anchors.centerIn: secondsCircle
-        source: "image://Theme/timepicker"
-        opacity: 0//0.1
+        source: "../images/timepicker.png"
+        opacity: 0
 
     }
 
