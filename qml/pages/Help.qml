@@ -4,6 +4,8 @@ import Sailfish.Silica 1.0
 Page {
     id: helpPage
     allowedOrientations: Orientation.Portrait | Orientation.Landscape | Orientation.LandscapeInverted
+    property bool largeScreen: Screen.sizeCategory === Screen.Large ||
+                               Screen.sizeCategory === Screen.ExtraLarge
     SilicaFlickable {
         anchors.fill: parent
         contentWidth: parent.width
@@ -41,7 +43,7 @@ In some newer operating systems, time_t has been widened to 64 bits. In the nega
 this goes back more than twenty times the age of the universe and in the positive direction for \
 approximately 293 billion years.<b><br></html>"
 
-                font.pixelSize: Theme.fontSizeExtraSmall
+                font.pixelSize: largeScreen ? Theme.fontSizeSmall : Theme.fontSizeExtraSmall
                 wrapMode: Text.Wrap
             }
         }

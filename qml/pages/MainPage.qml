@@ -6,6 +6,8 @@ Page {
 
     allowedOrientations: Orientation.Portrait | Orientation.Landscape
                          | Orientation.LandscapeInverted
+    property bool largeScreen: Screen.sizeCategory === Screen.Large ||
+                               Screen.sizeCategory === Screen.ExtraLarge
     onStatusChanged: {
         if (status === PageStatus.Inactive) {
             // stop timer when not on this Page
@@ -103,7 +105,7 @@ Page {
 
             width: page.width
             // set spacing considering the width/height ratio
-            spacing: page.height / page.width > 1.6 ? Theme.paddingMedium : Theme.paddingSmall - 2
+            spacing: largeScreen ? Theme.paddingLarge : Theme.paddingMedium
             PageHeader {
                 title: qsTr("epoch-calc")
             }
@@ -112,7 +114,7 @@ Page {
                 width: parent.width
                 anchors.horizontalCenter: parent.horizontalCenter
                 horizontalAlignment: Qt.AlignHCenter
-                visible: isPortrait
+                visible: isPortrait || largeScreen
             }
             Label {
                 x: Theme.paddingLarge
@@ -144,7 +146,7 @@ Page {
                             on_update_ux_time()
                         })
                     }
-                    width: isPortrait ? (column.width - Theme.paddingLarge)
+                    width: isPortrait || largeScreen ? (column.width - Theme.paddingLarge)
                                         / 2 : (column.width - Theme.paddingLarge) / 3.5
                     color: Theme.highlightColor
                     text: local_datetime.local_date
@@ -153,7 +155,7 @@ Page {
                     id: calculated_utc_time_landscape
                     text: get_utc_datetime() + " GMT"
                     color: Theme.secondaryColor
-                    visible: isLandscape
+                    visible: isLandscape && ! largeScreen
                 }
                 TextField {
                     id: timeField
@@ -179,7 +181,7 @@ Page {
                         })
                     }
                     color: Theme.highlightColor
-                    width: isPortrait ? (column.width - Theme.paddingLarge)
+                    width: isPortrait || largeScreen ? (column.width - Theme.paddingLarge)
                                         / 2 : (column.width - Theme.paddingLarge) / 3.5
                     horizontalAlignment: Text.AlignRight
                     text: get_local_time()
@@ -196,7 +198,7 @@ Page {
                 text: get_utc_datetime() + " GMT"
                 anchors.horizontalCenter: parent.horizontalCenter
                 color: Theme.secondaryColor
-                visible: isPortrait
+                visible: isPortrait || largeScreen
             }
 
             Row {
@@ -232,7 +234,7 @@ Page {
                 }
                 IconButton {
                     id: iconButton
-                    icon.source: "image://theme/icon-m-clear"
+                    icon.source: largeScreen ? "image://theme/icon-l-clear" : "image://theme/icon-m-clear"
                     visible: ux_time_textfield.text
                     highlighted: pressed
                     onClicked: {
@@ -260,28 +262,28 @@ Page {
                 spacing: isLandscape ? Theme.paddingMedium : 0
                 Label {
                     text: "Unix time"
-                    width: isPortrait ? (parent.width - (Theme.paddingLarge * 2))
-                                        / 2 : (parent.width - (Theme.paddingLarge * 2)) / 5.2
+                    width: isPortrait || largeScreen ? (column.width - unix_secs.width - Theme.paddingLarge * 2)
+                                        / 2 : (parent.width - (Theme.paddingLarge * 2)) / 5.3
                 }
                 Label {
                     id: unix_secs
                     text: mainapp.uxTime_now
-                    width: isPortrait ? (parent.width - (Theme.paddingLarge * 2))
-                                        / 2 : (parent.width - (Theme.paddingLarge * 2)) / 2.5
+                    width: isPortrait || largeScreen ? (parent.width - (Theme.paddingLarge * 2))
+                                        : (parent.width - (Theme.paddingLarge * 2)) / 2.5
                     horizontalAlignment: Text.AlignRight
                     color: Theme.secondaryColor
                 }
                 Label {
                     text: "Local TZ"
                     width: (parent.width - (Theme.paddingLarge * 2)) / 5.5
-                    visible: isLandscape
+                    visible: isLandscape && ! largeScreen
                 }
                 Label {
                     text: local_datetime.timezone
                     width: (parent.width - (Theme.paddingLarge * 2)) / 5.2
                     horizontalAlignment: Text.AlignRight
                     color: Theme.secondaryColor
-                    visible: isLandscape
+                    visible: isLandscape && ! largeScreen
                 }
             }
             Row {
@@ -291,28 +293,28 @@ Page {
                 spacing: isLandscape ? Theme.paddingMedium : 0
                 Label {
                     text: "Local time"
-                    width: isPortrait ? (parent.width - (Theme.paddingLarge * 2))
+                    width: isPortrait || largeScreen ? (column.width - local_time.width - Theme.paddingLarge * 2)
                                         / 2 : (parent.width - (Theme.paddingLarge * 2)) / 5.3
                 }
                 Label {
                     id: local_time
                     text: mainapp.localTime
-                    width: isPortrait ? (parent.width - (Theme.paddingLarge * 2))
-                                        / 2 : (parent.width - (Theme.paddingLarge * 2)) / 2.5
+                    width: isPortrait || largeScreen ? (parent.width - (Theme.paddingLarge * 2))
+                                        : (parent.width - (Theme.paddingLarge * 2)) / 2.5
                     horizontalAlignment: Text.AlignRight
                     color: Theme.secondaryColor
                 }
                 Label {
                     text: "TZ offset"
                     width: (parent.width - (Theme.paddingLarge * 2)) / 5.5
-                    visible: isLandscape
+                    visible: isLandscape && ! largeScreen
                 }
                 Label {
                     text: new Date().toString().split(" ")[5]
                     width: (parent.width - (Theme.paddingLarge * 2)) / 5.2
                     horizontalAlignment: Text.AlignRight
                     color: Theme.secondaryColor
-                    visible: isLandscape
+                    visible: isLandscape && ! largeScreen
                 }
             }
             Row {
@@ -322,14 +324,14 @@ Page {
                 Label {
                     text: "Local TZ"
                     width: (parent.width - (Theme.paddingLarge * 2)) / 2
-                    visible: isPortrait
+                    visible: isPortrait || largeScreen
                 }
                 Label {
                     text: local_datetime.timezone
                     width: (parent.width - (Theme.paddingLarge * 2)) / 2
                     horizontalAlignment: Text.AlignRight
                     color: Theme.secondaryColor
-                    visible: isPortrait
+                    visible: isPortrait || largeScreen
                 }
             }
             Row {
@@ -339,14 +341,14 @@ Page {
                 spacing: isLandscape ? Theme.paddingMedium : 0
                 Label {
                     text: "GMT time"
-                    width: isPortrait ? (parent.width - (Theme.paddingLarge * 2))
+                    width: isPortrait || largeScreen ? (column.width - utc_time.width - Theme.paddingLarge * 2)
                                         / 2 : (parent.width - (Theme.paddingLarge * 2)) / 5.3
                 }
                 Label {
                     id: utc_time
                     text: utcTime //.utc_datetime_formatted
-                    width: isPortrait ? (parent.width - (Theme.paddingLarge * 2))
-                                        / 2 : (parent.width - (Theme.paddingLarge * 2)) / 2.5
+                    width: isPortrait || largeScreen ? (parent.width - (Theme.paddingLarge * 2))
+                                        : (parent.width - (Theme.paddingLarge * 2)) / 2.5
                     horizontalAlignment: Text.AlignRight
                     color: Theme.secondaryColor
                 }
@@ -358,14 +360,14 @@ Page {
                 Label {
                     text: "TZ offset"
                     width: (parent.width - (Theme.paddingLarge * 2)) / 2
-                    visible: isPortrait
+                    visible: isPortrait || largeScreen
                 }
                 Label {
                     text: new Date().toString().split(" ")[5]
                     width: (parent.width - (Theme.paddingLarge * 2)) / 2
                     horizontalAlignment: Text.AlignRight
                     color: Theme.secondaryColor
-                    visible: isPortrait
+                    visible: isPortrait || largeScreen
                 }
             }
             Separator {
@@ -373,7 +375,7 @@ Page {
                 width: parent.width
                 anchors.horizontalCenter: parent.horizontalCenter
                 horizontalAlignment: Qt.AlignHCenter
-                visible: isPortrait
+                visible: isPortrait || largeScreen
             }
         }
     }
