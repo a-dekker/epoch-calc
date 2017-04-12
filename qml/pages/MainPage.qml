@@ -105,7 +105,7 @@ Page {
 
             width: page.width
             // set spacing considering the width/height ratio
-            spacing: largeScreen ? Theme.paddingLarge : Theme.paddingMedium
+            spacing: largeScreen ? Theme.paddingLarge : ( isPortrait ? Theme.paddingMedium : Theme.paddingSmall )
             PageHeader {
                 title: qsTr("epoch-calc")
             }
@@ -249,6 +249,7 @@ Page {
                 width: parent.width
                 anchors.horizontalCenter: parent.horizontalCenter
                 horizontalAlignment: Qt.AlignHCenter
+                visible: isPortrait || largeScreen
             }
             Label {
                 x: Theme.paddingLarge

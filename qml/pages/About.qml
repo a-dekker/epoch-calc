@@ -33,7 +33,7 @@ Page {
             }
             Label {
                 text: "epoch-calc"
-                font.pixelSize: Theme.fontSizeExtraLarge
+                font.pixelSize: largeScreen ? Theme.fontSizeHuge : Theme.fontSizeExtraLarge
                 anchors.horizontalCenter: parent.horizontalCenter
             }
             Rectangle {
@@ -74,7 +74,7 @@ Page {
                 horizontalAlignment: Qt.AlignHCenter
             }
             Label {
-                text: "© Arno Dekker 2014-2015"
+                text: "© Arno Dekker 2014-2017"
                 anchors.horizontalCenter: parent.horizontalCenter
             }
         }
