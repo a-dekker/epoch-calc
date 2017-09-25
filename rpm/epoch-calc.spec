@@ -13,13 +13,12 @@ Name:       harbour-epoch-calc
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Assistant for calculating Unix time
-Version:    0.2
+Version:    0.6
 Release:    0
 Group:      Qt/Qt
 License:    LICENSE
 URL:        https://openrepos.net/content/ade/epoch-calc
 Source0:    %{name}-%{version}.tar.bz2
-Source100:  epoch-calc.yaml
 Requires:   sailfishsilica-qt5 >= 0.10.9
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  pkgconfig(Qt5Core)
@@ -67,7 +66,13 @@ desktop-file-install --delete-original       \
 %{_datadir}/%{name}/qml
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
+%{_datadir}/icons/hicolor/108x108/apps/%{name}.png
+%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
+%{_datadir}/icons/hicolor/256x256/apps/%{name}.png
 /usr/bin
 /usr/share/harbour-epoch-calc
 /usr/share/applications
 /usr/share/icons/hicolor/86x86/apps
+/usr/share/icons/hicolor/108x108/apps
+/usr/share/icons/hicolor/128x128/apps
+/usr/share/icons/hicolor/256x256/apps

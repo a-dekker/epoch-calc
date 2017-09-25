@@ -146,8 +146,7 @@ Page {
                             on_update_ux_time()
                         })
                     }
-                    width: isPortrait || largeScreen ? (column.width - Theme.paddingLarge)
-                                        / 2 : (column.width - Theme.paddingLarge) / 3.5
+                    width: isPortrait || largeScreen ? column.width / 2 : column.width / 4
                     color: Theme.highlightColor
                     text: local_datetime.local_date
                 }
@@ -156,6 +155,8 @@ Page {
                     text: get_utc_datetime() + " GMT"
                     color: Theme.secondaryColor
                     visible: isLandscape && ! largeScreen
+                    horizontalAlignment: Text.AlignHCenter
+                    width: column.width / 2
                 }
                 TextField {
                     id: timeField
@@ -181,8 +182,7 @@ Page {
                         })
                     }
                     color: Theme.highlightColor
-                    width: isPortrait || largeScreen ? (column.width - Theme.paddingLarge)
-                                        / 2 : (column.width - Theme.paddingLarge) / 3.5
+                    width: isPortrait || largeScreen ? column.width / 2 : column.width / 4
                     horizontalAlignment: Text.AlignRight
                     text: get_local_time()
                 }
@@ -249,7 +249,7 @@ Page {
                 width: parent.width
                 anchors.horizontalCenter: parent.horizontalCenter
                 horizontalAlignment: Qt.AlignHCenter
-                visible: isPortrait || largeScreen
+                visible: isPortrait || largeScreen || screen.width > 540
             }
             Label {
                 x: Theme.paddingLarge
@@ -376,7 +376,7 @@ Page {
                 width: parent.width
                 anchors.horizontalCenter: parent.horizontalCenter
                 horizontalAlignment: Qt.AlignHCenter
-                visible: isPortrait || largeScreen
+                visible: isPortrait || largeScreen || screen.width > 540
             }
         }
     }
