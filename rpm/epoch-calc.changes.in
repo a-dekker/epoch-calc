@@ -8,6 +8,8 @@
 # * date Author's Name <author's email> version-release
 # - Summary of changes
 
+* Mon Sep 25 2017 Jack Tar <jack.tar@example.com> 0.0.6-1
+- resolution adaption in about page
 * Mon Sep 25 2017 Jack Tar <jack.tar@example.com> 0.0.6-0
 - Better alignment, some resolution issues fixed
 * Sat Feb 24 2017 Jack Tar <jack.tar@example.com> 0.0.5-0

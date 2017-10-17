@@ -14,7 +14,7 @@ Name:       harbour-epoch-calc
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Assistant for calculating Unix time
 Version:    0.6
-Release:    0
+Release:    1
 Group:      Qt/Qt
 License:    LICENSE
 URL:        https://openrepos.net/content/ade/epoch-calc

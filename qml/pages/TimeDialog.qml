@@ -39,8 +39,6 @@ import Sailfish.Silica 1.0
 
 Dialog {
     id: diaTime
-    allowedOrientations: Orientation.Portrait | Orientation.Landscape
-                         | Orientation.LandscapeInverted
     canAccept: true
     property string infotext: ""
     property int hour: 0
