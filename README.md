@@ -12,4 +12,4 @@ Using an rpm installer of via [openrepos.net](https://openrepos.net/content/ade/
 
 ## License
 
-LGPL
+GPLv3

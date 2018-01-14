@@ -50,4 +50,3 @@ CONFIG += sailfishapp_i18n
 # TRANSLATIONS += translations/epoch-calc-de.ts
 
 HEADERS += \
-
