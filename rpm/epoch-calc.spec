@@ -72,7 +72,4 @@ desktop-file-install --delete-original       \
 /usr/bin
 /usr/share/harbour-epoch-calc
 /usr/share/applications
-/usr/share/icons/hicolor/86x86/apps
-/usr/share/icons/hicolor/108x108/apps
-/usr/share/icons/hicolor/128x128/apps
-/usr/share/icons/hicolor/256x256/apps
+/usr/share/icons/hicolor/*/apps

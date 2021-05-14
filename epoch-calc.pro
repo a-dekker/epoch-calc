@@ -39,10 +39,13 @@ icon108.path = /usr/share/icons/hicolor/108x108/apps
 icon128.files += icons/128x128/harbour-epoch-calc.png
 icon128.path = /usr/share/icons/hicolor/128x128/apps
 
+icon172.files += icons/172x172/harbour-epoch-calc.png
+icon172.path = /usr/share/icons/hicolor/172x172/apps
+
 icon256.files += icons/256x256/harbour-epoch-calc.png
 icon256.path = /usr/share/icons/hicolor/256x256/apps
 
-INSTALLS += icon86 icon108 icon128 icon256
+INSTALLS += icon86 icon108 icon128 icon172 icon256
 
 # to disable building translations every time, comment out the
 # following CONFIG line
