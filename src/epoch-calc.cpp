@@ -35,20 +35,11 @@
 #include <QtQml>
 #include <qqml.h>
 #include <sailfishapp.h>
-#include <QProcess>
 #include <QQuickView>
 #include <QtGui>
 
 int main(int argc, char *argv[])
 {
-    QProcess appinfo;
-    QString appversion;
-    // read app version from rpm database on startup
-    appinfo.start("/bin/rpm", QStringList() << "-qa" << "--queryformat" << "%{version}-%{RELEASE}" << "harbour-epoch-calc");
-    appinfo.waitForFinished(-1);
-    if (appinfo.bytesAvailable() > 0) {
-        appversion = appinfo.readAll();
-    }
     // SailfishApp::main() will display "qml/template.qml", if you need more
     // control over initialization, you can use:
     //
@@ -60,7 +51,7 @@ int main(int argc, char *argv[])
     QGuiApplication* app = SailfishApp::application(argc, argv);
 
     QQuickView* view = SailfishApp::createView();
-    view->rootContext()->setContextProperty("version", appversion);
+    view->rootContext()->setContextProperty("version", APP_VERSION);
     view->setSource(SailfishApp::pathTo("qml/epoch-calc.qml"));
     view->show();
     return app->exec();

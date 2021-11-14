@@ -8,6 +8,10 @@
 # * date Author's Name <author's email> version-release
 # - Summary of changes
 
+* Sun Nov 14 2021 Jack Tar <jack.tar@example.com> 0.0.8-1
+- Changes for sailjail compliancy, no specific permissions needed
+* Mon Jun 28 2021 Jack Tar <jack.tar@example.com> 0.0.7-1
+- Improved icon by JSEHV
 * Mon Sep 25 2017 Jack Tar <jack.tar@example.com> 0.0.6-1
 - resolution adaption in about page
 * Mon Sep 25 2017 Jack Tar <jack.tar@example.com> 0.0.6-0

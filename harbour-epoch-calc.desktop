@@ -5,3 +5,7 @@ Name=epoch-calc
 Icon=harbour-epoch-calc
 Exec=harbour-epoch-calc
 
+[X-Sailjail]
+OrganizationName=org.adekker
+ApplicationName=epoch-calc
+Permissions=

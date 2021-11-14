@@ -43,10 +43,8 @@ ApplicationWindow {
     property string localTime: ''
     property bool viewable: cover.status === Cover.Active || applicationActive
 
-    allowedOrientations: Orientation.Portrait | Orientation.Landscape
-                         | Orientation.LandscapeInverted
-    _defaultPageOrientations: Orientation.Portrait | Orientation.Landscape
-                         | Orientation.LandscapeInverted
+    allowedOrientations: defaultAllowedOrientations
+    _defaultPageOrientations: defaultAllowedOrientations
 
     initialPage: Component {
         MainPage {

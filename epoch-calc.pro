@@ -30,6 +30,12 @@ OTHER_FILES += qml/epoch-calc.qml \
     qml/pages/TimePickerSeconds.qml \
     qml/pages/TimeDialog.qml
 
+isEmpty(VERSION) {
+    VERSION = $$system( egrep "^Version:\|^Release:" rpm/epoch-calc.spec |tr -d "[A-Z][a-z]: " | tr "\\\n" "." | sed "s/\.$//g"| tr -d "[:space:]")
+    message("VERSION is unset, assuming $$VERSION")
+}
+DEFINES += APP_VERSION=\\\"$$VERSION\\\"
+
 icon86.files += icons/86x86/harbour-epoch-calc.png
 icon86.path = /usr/share/icons/hicolor/86x86/apps
 
